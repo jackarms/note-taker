@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const db = require("./db/db.json");
 const fs = require("fs");
+const uniqid = require("uniqid");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -21,13 +22,14 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.post("/api/notes", (req, res) => {
+  req.body.id = uniqid();
   const jsonNotes = req.body;
-  fs.writeFileSync("./db/db.json", JSON.stringify([{ jsonNotes }], null, 2));
   db.push(jsonNotes);
-  res.json(db);
+  fs.writeFileSync("./db/db.json", JSON.stringify(db), null, 2);
+  res.json(jsonNotes);
 });
 
-// app.delete("/api/notes/:id", (req, res) => {});
+app.delete("/api/notes/:id", (req, res) => {});
 
 app.listen(3001, () => {
   console.log(`API server now on port 3001!`);
