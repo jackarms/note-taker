@@ -150,6 +150,7 @@ const renderNoteList = async (notes) => {
 
       liEl.append(delBtnEl);
     }
+
     return liEl;
   };
 
@@ -165,11 +166,11 @@ const renderNoteList = async (notes) => {
   });
 
   if (window.location.pathname === "/notes") {
-    noteListItems.forEach((note) => note.List[0].append(note));
+    noteListItems.forEach((note) => noteList[0].append(note));
   }
 };
 
-//GETS NOTES FROM THE DB AND RENDERS THEM TO THE SIDEBAR
+// Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
 if (window.location.pathname === "/notes") {

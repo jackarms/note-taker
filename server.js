@@ -21,16 +21,10 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.post("/api/notes", (req, res) => {
-  let newNote = req.body;
-  let title = newNote.title;
-  let text = newNote.text;
-  console.log(text);
-  newNote.forEach((note, index) => {
-    fs.writeFileSync(
-      path.join(__dirname, "/db/db.json"),
-      JSON.stringify([{ title, text }], null, 2)
-    );
-  });
+  const jsonNotes = req.body;
+  fs.writeFileSync("./db/db.json", JSON.stringify([{ jsonNotes }], null, 2));
+  db.push(jsonNotes);
+  res.json(db);
 });
 
 // app.delete("/api/notes/:id", (req, res) => {});
