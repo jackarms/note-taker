@@ -29,7 +29,12 @@ app.post("/api/notes", (req, res) => {
   res.json(jsonNotes);
 });
 
-app.delete("/api/notes/:id", (req, res) => {});
+app.delete("/api/notes/:id", (req, res) => {
+  const { id } = req.params;
+  const noteId = db.findIndex((p) => p.id == id);
+  db.splice(noteId, 1);
+  return res.send();
+});
 
 app.listen(3001, () => {
   console.log(`API server now on port 3001!`);
